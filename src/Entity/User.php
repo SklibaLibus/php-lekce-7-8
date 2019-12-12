@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
@@ -18,18 +19,25 @@ class User
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Length(min = 3)
      */
     private $login;
 
+
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank()
      */
     private $name;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Email(
+     *     message = "Tento email '{{ value }}' je chybně zadaný."
+     * )
      */
     private $email;
+
 
     /**
      * @ORM\Column(type="date")
@@ -38,21 +46,25 @@ class User
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\Url
      */
     private $website;
 
     /**
      * @ORM\Column(type="string", length=2)
+     * @Assert\Country
      */
     private $country;
 
     /**
      * @ORM\Column(type="string", length=25, nullable=true)
+     * @Assert\Choice({"clothes", "food", "electronics"})
      */
     private $favouriteCategory;
 
     /**
      * @ORM\Column(type="integer")
+     * @Assert\Type(type="integer")
      */
     private $defaultVat;
 
